@@ -426,57 +426,64 @@ class _GameBoardState extends State<GameBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-              child: GridView.builder(
-                  itemCount: whitePiecesTaken.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 8),
-                  itemBuilder: (context, index) {
-                    return DeadPiece(
-                      chessPiece: whitePiecesTaken[index],
-                    );
-                  })),
-          Text(checkStatus ? "check!" : ""),
-          Expanded(
-            flex: 4,
-            child: GridView.builder(
-                itemCount: 8 * 8,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 8,
-                ),
-                itemBuilder: (context, index) {
-                  int row = index ~/ 8;
-                  int col = index % 8;
-                  bool isSelected = selectedRow == row && selectedCol == col;
-                  bool isValidMove = false;
-                  for (var pos in validMoves) {
-                    if (pos[0] == row && pos[1] == col) {
-                      isValidMove = true;
-                    }
-                  }
-                  return Square(
-                    isWhite: isWhite(index),
-                    chessPiece: board[row][col],
-                    isSelected: isSelected,
-                    isValidMove: isValidMove,
-                    onTap: () => pieceSelected(row, col),
-                  );
-                }),
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(
+            maxWidth: 660,
           ),
-          Expanded(
-              child: GridView.builder(
-                  itemCount: blackPiecesTaken.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 8),
-                  itemBuilder: (context, index) {
-                    return DeadPiece(
-                      chessPiece: blackPiecesTaken[index],
-                    );
-                  })),
-        ],
+          child: Column(
+             children: [
+              Expanded(
+                  child: GridView.builder(
+                      itemCount: whitePiecesTaken.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 8),
+                      itemBuilder: (context, index) {
+                        return DeadPiece(
+                          chessPiece: whitePiecesTaken[index],
+                        );
+                      })),
+              Text(checkStatus ? "check!" : ""),
+              Expanded(
+                flex: 4,
+                child: GridView.builder(
+                    itemCount: 8 * 8,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 8,
+                    ),
+                    itemBuilder: (context, index) {
+                      int row = index ~/ 8;
+                      int col = index % 8;
+                      bool isSelected = selectedRow == row && selectedCol == col;
+                      bool isValidMove = false;
+                      for (var pos in validMoves) {
+                        if (pos[0] == row && pos[1] == col) {
+                          isValidMove = true;
+                        }
+                      }
+                      return Square(
+                        isWhite: isWhite(index),
+                        chessPiece: board[row][col],
+                        isSelected: isSelected,
+                        isValidMove: isValidMove,
+                        onTap: () => pieceSelected(row, col),
+                      );
+                    }),
+              ),
+              Expanded(
+                  child: GridView.builder(
+                      itemCount: blackPiecesTaken.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 8),
+                      itemBuilder: (context, index) {
+                        return DeadPiece(
+                          chessPiece: blackPiecesTaken[index],
+                        );
+                      })),
+            ],
+          ),
+        ),
       ),
     );
   }
