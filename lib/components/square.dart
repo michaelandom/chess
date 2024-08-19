@@ -7,17 +7,21 @@ class Square extends StatelessWidget {
   final bool isSelected;
   final bool isValidMove;
   final Function()? onTap;
-  const Square({required this.isWhite,this.chessPiece,required this.isSelected,required this.isValidMove,required this.onTap,super.key});
+  final bool isKingInCheck;
+  const Square({required this.isWhite,this.chessPiece,required this.isSelected,required this.isValidMove,required this.onTap,required this.isKingInCheck,super.key});
 
   @override
   Widget build(BuildContext context) {
     Color? squareColor;
-
-    if(isSelected){
+     if(isKingInCheck && chessPiece?.type == ChessPieceType.king) {
+    squareColor = Colors.red;
+    }
+    else if(isSelected){
       squareColor = Colors.green;
     }else if(isValidMove) {
       squareColor = Colors.green[200];
-    }else{
+    }
+    else{
       squareColor=  isWhite ? foregroundColor: backgroundColor;
     }
 

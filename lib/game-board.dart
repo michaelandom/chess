@@ -473,6 +473,7 @@ class _GameBoardState extends State<GameBoard> {
                             isSelected: isSelected,
                             isValidMove: isValidMove,
                             onTap: () => pieceSelected(row, col),
+                              isKingInCheck: board[row][col]!= null ? isKingInCheck( board[row][col]!.isWhite): false
                           );
                         }),
                   ),
